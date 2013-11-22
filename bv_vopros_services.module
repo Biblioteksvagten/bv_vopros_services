@@ -5,3 +5,21 @@
  */
 
 include_once 'bv_vopros_services.features.inc';
+
+/**
+ * Implements hook_views_post_execute().
+ *
+ * Fix up URL on profile images.
+ */
+function bv_vopros_services_views_post_execute($view) {
+  // Fix public:// path to a external URL. services_views grabs the result so
+  // early that views formatters don't have a chance to do it.
+  if ($view->name == 'bv_vopros_services_users') {
+    foreach ($view->result as $key => $row) {
+      if (!empty($row->file_managed_field_data_field_vopros_user_image_uri)) {
+        $path = file_create_url($row->file_managed_field_data_field_vopros_user_image_uri);
+        $row->file_managed_field_data_field_vopros_user_image_uri = $path;
+      }
+    }
+  }
+}
