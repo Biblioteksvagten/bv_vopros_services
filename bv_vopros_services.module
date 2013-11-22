@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BV Vopros Services feature.
+ */
+
+include_once 'bv_vopros_services.features.inc';
